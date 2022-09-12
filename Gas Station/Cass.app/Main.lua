@@ -244,7 +244,7 @@ end
 if filesystem.exists(tempPath .. "/Version.cfg") then
   filesystem.remove(tempPath .. "/Version.cfg")
   internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg?token=GHSAT0AAAAAABYKJOFYH57IAMATYZ3Q7Z2IYY7KIKQ",
+    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg",
     tempPath .. "/Version.cfg"
   )
   if tonumber(filesystem.read(tempPath .. "/Version.cfg")) == version then else
@@ -253,7 +253,7 @@ if filesystem.exists(tempPath .. "/Version.cfg") then
   
 
     internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/updater.lua?token=GHSAT0AAAAAABYKJOFYGJ5LCSVRGFGD34GSYY7KIXQ",
+    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/updater.lua",
     tempPath .. "/CassUpdater.lua"
     )
     system.execute(tempPath .. "/CassUpdater.lua")
@@ -262,14 +262,14 @@ if filesystem.exists(tempPath .. "/Version.cfg") then
   end
 else
   internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg?token=GHSAT0AAAAAABYKJOFYH57IAMATYZ3Q7Z2IYY7KIKQ",
+    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg",
     tempPath .. "/Version.cfg"
   )
   if tonumber(filesystem.read(tempPath .. "/Version.cfg")) == version then else
     gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")  
     
     internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/updater.lua?token=GHSAT0AAAAAABYKJOFYGJ5LCSVRGFGD34GSYY7KIXQ",
+    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/updater.lua",
     tempPath .. "/CassUpdater.lua"
     )
     system.execute(tempPath .. "/CassUpdater.lua")
