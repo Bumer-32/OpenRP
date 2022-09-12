@@ -10,7 +10,7 @@ local modem = component.modem
 ---------------------------------------------------------------------------------------------------
 local resouces = filesystem.path(system.getCurrentScript())
 local tempPath = system.getTemporaryPath()
-local version = "1.3.2"
+local version = "1.3.3"
 local prices = {}
 
 local logoImage = image.load(resouces .. "Logo.pic")
@@ -247,7 +247,7 @@ if filesystem.exists(tempPath .. "/Version.cfg") then
     "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg",
     tempPath .. "/Version.cfg"
   )
-  if filesystem.read(tempPath .. "/Version.cfg") == version then else
+  if tonumber(filesystem.read(tempPath .. "/Version.cfg")) == version then else
     gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")
     event.sleep(2)
   
@@ -265,7 +265,7 @@ else
     "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg",
     tempPath .. "/Version.cfg"
   )
-  if filesystem.read(tempPath .. "/Version.cfg") == version then else
+  if tonumber(filesystem.read(tempPath .. "/Version.cfg")) == version then else
     gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")  
     
     internet.download(
