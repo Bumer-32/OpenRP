@@ -247,7 +247,7 @@ if filesystem.exists(tempPath .. "/Version.cfg") then
     "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg",
     tempPath .. "/Version.cfg"
   )
-  if tonumber(filesystem.read(tempPath .. "/Version.cfg")) `= tonumber(version) then
+  if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(version) then
     gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")
     event.sleep(2)
   
@@ -265,7 +265,7 @@ else
     "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass.app/Version.cfg",
     tempPath .. "/Version.cfg"
   )
-  if tonumber(filesystem.read(tempPath .. "/Version.cfg")) `= tonumber(version) then
+  if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(version) then
     gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")  
     
     internet.download(
