@@ -13,5 +13,5 @@ print("Succes!")
 print("")
 
 print("Downloading BigLetters.lua")
-internet.download("https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/BigLetters.lua", "/Applications/Table.app/BigLetters.lua")
+internet.download("https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/BigLetters.lua", "/Applications/Table.app/BigLetters.lua")
 print("Succes!")
