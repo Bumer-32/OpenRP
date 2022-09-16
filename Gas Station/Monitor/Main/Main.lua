@@ -10,6 +10,7 @@ local bigLetters = require(filesystem.path(system.getCurrentScript()) .. "/BigLe
 local modem = component.modem
 ---------------------------------------------------------------------------------------------------
 local version = "1.0"
+local tempPath = system.getTemporaryPath()
 ---------------------------------------------------------------------------------------------------
 local workspace = gui.workspace()
 workspace:addChild(gui.panel(1, 1, workspace.width, workspace.height, 0x262626))
@@ -59,12 +60,14 @@ while true do
 
       if extra == "update" then
         internet.download(
-          "", -- computer.shutdown(
-          ""
+          "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/updater.lua",
+          tempPath .. "/updater.lua"
         )
+        system.execute(tempPath .. "/updater.lua")
       end
   end
   modem.close(32)
 end
 ---------------------------------------------------------------------------------------------------
+workspace:draw()
 workspace:start()

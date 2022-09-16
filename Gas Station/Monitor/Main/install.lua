@@ -8,10 +8,10 @@ print("Succes!")
 print("")
 
 print("Downloading Main.lua")
-internet.download("", "/Applications/Table.app/Main.lua")
+internet.download("https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/Main.lua", "/Applications/Table.app/Main.lua")
 print("Succes!")
 print("")
 
 print("Downloading BigLetters.lua")
-internet.download("", "/Applications/Table.app/BigLetters.lua")
+internet.download("https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/BigLetters.lua", "/Applications/Table.app/BigLetters.lua")
 print("Succes!")
