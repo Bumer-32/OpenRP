@@ -96,8 +96,8 @@ end
 local function load()
   --треба вмикнути індикатор і відкрити порт для поточного трафіку перевірки
   progressIndicator.active = true
-  modem.open(32)
   modem.open(33)
+  modem.open(35)
   
     --перевірка палива
   for i = 1, 10 do
@@ -121,7 +121,7 @@ local function load()
     if i == 10 then
       gui.alert("Немає підключення")
     end
-    modem.broadcast(33, gas92.text, gas98.text, diesel.text)
+    modem.broadcast(34, gas92.text, gas98.text, diesel.text)
     local name2, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
     if name2 == "modem_message" then
       if sGas922 == gas92.text then
@@ -147,8 +147,8 @@ local function load()
   end
   --та вимикай його
   progressIndicator.active = false
-  modem.close(32) --і порт закрий
   modem.close(33) --і порт закрий
+  modem.close(35) --і порт закрий
   
   start()
 end
