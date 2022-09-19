@@ -176,7 +176,7 @@ send.onTouch = function()
   
   filesystem.writeTable(resouces .. "Config.cfg", prices)
 
-  load()
+  load(nil, true)
 end
 
 pay.onTouch = function()
