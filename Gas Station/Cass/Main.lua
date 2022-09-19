@@ -103,9 +103,6 @@ local function load(extra, indicator)
   prices = filesystem.readTable(resouces .. "Config.cfg")
     --перевірка палива
   for i = 1, 10 do
-    if i == 10 then
-      gui.alert("Немає підключення")
-    end
     modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
     local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
     if name == "modem_message" then
@@ -118,23 +115,6 @@ local function load(extra, indicator)
       end
     end
   end
-
-  -- for i = 1, 10 do
-  --   if i == 10 then
-  --     gui.alert("Немає підключення")
-  --   end
-  --   modem.broadcast(33, prices[1], prices[2], prices[3], "gas")
-  --   local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
-  --   if name == "modem_message" then
-  --     if sGas922 == gas92.text then
-  --       if sGas982 == gas98.text then
-  --         if sDiesel2 == diesel.text then
-  --           break
-  --         end
-  --       end
-  --     end
-  --   end
-  -- end
 
   if indicator then
     --крутимо індикатор
@@ -283,22 +263,18 @@ else
   end
 end
 for i = 1, 10 do
-  if i == 10 then
-    gui.alert("Немає підключення")
-  else
-    load("ver", false)
-    local name, _, _, _, _, _, _, _, extra = event.pull()
-    if name == "modem_message" then
-      if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
-        gui.alert("Программа монітору буде оновлена!")
-        event.sleep(2)
-        load("update", false)
-        for i = 1, 10 do        
-          local name1, _, _, _, _, _, _, _, extra = event.pull()
-          if name == "modem_message" then
-            if extra == "updated" then
-              break
-            end
+  load("ver", false)
+  local name, _, _, _, _, _, _, _, extra = event.pull()
+  if name == "modem_message" then
+    if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
+      gui.alert("Программа монітору буде оновлена!")
+      event.sleep(2)
+      load("update", false)
+      for i = 1, 10 do        
+        local name1, _, _, _, _, _, _, _, extra = event.pull()
+        if name == "modem_message" then
+          if extra == "updated" then
+            break
           end
         end
       end
