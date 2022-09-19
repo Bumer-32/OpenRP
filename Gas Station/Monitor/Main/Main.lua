@@ -52,11 +52,15 @@ while true do
       end
 
       if extra == "ver" then
-        modem.broadcast(32, nil, nil, nil, version)
+        for i = 1, 5 do
+          modem.broadcast(32, nil, nil, nil, version)
+        end
       end
 
       if extra == "update" then
-        modem.broadcast(32, nil, nil, nil, "updated")
+        for i = 1, 5 do
+          modem.broadcast(32, nil, nil, nil, "updated")
+        end
         internet.download(
           "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/updater.lua",
           tempPath .. "/updater.lua"
