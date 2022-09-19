@@ -277,14 +277,13 @@ for i = 1, 5 do
   modem.open(32)
   local name, _, _, _, _, _, _, _, extra = event.pull()
   modem.close(32)
-  gui.alert(extra)
   if name == "modem_message" then
     if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
       gui.alert("Программа монітору буде оновлена!")
       event.sleep(2)
       modem.broadcast(32, nil, nil, nil, "update")
       modem.open(32)
-      local name1, _, _, _, _, _, _, _, extra = event.pull()
+      local name, _, _, _, _, _, _, _, extra = event.pull()
       modem.close(32)
       if name == "modem_message" then
         if extra == "updated" then
