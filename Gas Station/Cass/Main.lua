@@ -10,7 +10,7 @@ local modem = component.modem
 ---------------------------------------------------------------------------------------------------
 local resouces = filesystem.path(system.getCurrentScript())
 local tempPath = system.getTemporaryPath()
-local version = "1.3.3"
+local version = "1.3.4"
 local prices = {}
 
 local logoImage = image.load(resouces .. "Logo.pic")
@@ -96,8 +96,8 @@ end
 local function load()
   --треба вмикнути індикатор і відкрити порт для поточного трафіку перевірки
   progressIndicator.active = true
+  modem.open(32)
   modem.open(33)
-  modem.open(35)
   
     --перевірка палива
   for i = 1, 10 do
@@ -105,13 +105,11 @@ local function load()
       gui.alert("Немає підключення")
     end
     modem.broadcast(32, gas92.text, gas98.text, diesel.text)
-    local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
-    if name == "modem_message" then
-      if sGas92 == gas92.text then
-        if sGas98 == gas98.text then
-          if sDiesel == diesel.text then
-            break
-          end
+    local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull("modem_message")
+    if sGas92 == gas92.text then
+      if sGas98 == gas98.text then
+        if sDiesel == diesel.text then
+          break
         end
       end
     end
@@ -121,14 +119,12 @@ local function load()
     if i == 10 then
       gui.alert("Немає підключення")
     end
-    modem.broadcast(34, gas92.text, gas98.text, diesel.text)
-    local name2, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
-    if name2 == "modem_message" then
-      if sGas922 == gas92.text then
-        if sGas982 == gas98.text then
-          if sDiesel2 == diesel.text then
-            break
-          end
+    modem.broadcast(32, gas92.text, gas98.text, diesel.text)
+    local _, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull("modem_message")
+    if sGas922 == gas92.text then
+      if sGas982 == gas98.text then
+        if sDiesel2 == diesel.text then
+          break
         end
       end
     end
@@ -147,8 +143,8 @@ local function load()
   end
   --та вимикай його
   progressIndicator.active = false
+  modem.close(32) --і порт закрий
   modem.close(33) --і порт закрий
-  modem.close(35) --і порт закрий
   
   start()
 end
@@ -258,7 +254,7 @@ if filesystem.exists(tempPath .. "/Version.cfg") then
     )
     system.execute(tempPath .. "/CassUpdater.lua")
     
-    window:remove()
+    window:remove() 
   end
 else
   internet.download(
@@ -275,6 +271,23 @@ else
     system.execute(tempPath .. "/CassUpdater.lua")
 
     window:remove()
+  end
+end
+for i = 1, 10 do
+  if i == 10 then
+    gui.alert("Немає підключення")
+  else
+    modem.broadcast(32, nil, nil, nil, "ver")
+    local name, _, _, _, _, _, _, _, extra = event.pull("modem_message")
+    if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
+      gui.alert("Программа монітору буде оновлена!")
+      event.sleep(2)
+      modem.broadcast(32, nil, nil, nil, "update")
+      local _, _, _, _, _, _, _, _, extra = event.pull("modem_message")
+      if extra == "updated" then
+        break
+      end
+    end
   end
 end
 ---------------------------------------------------------------------------------------------------
