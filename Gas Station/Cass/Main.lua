@@ -106,7 +106,7 @@ local function load(extra, indicator)
     if i == 10 then
       gui.alert("Немає підключення")
     end
-    modem.broadcast(32, prices[1], prices[2], prices[3])
+    modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
     local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
     if name == "modem_message" then
       if sGas92 == gas92.text then
@@ -119,22 +119,22 @@ local function load(extra, indicator)
     end
   end
 
-  for i = 1, 10 do
-    if i == 10 then
-      gui.alert("Немає підключення")
-    end
-    modem.broadcast(32, prices[1], prices[2], prices[3])
-    local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
-    if name == "modem_message" then
-      if sGas922 == gas92.text then
-        if sGas982 == gas98.text then
-          if sDiesel2 == diesel.text then
-            break
-          end
-        end
-      end
-    end
-  end
+  -- for i = 1, 10 do
+  --   if i == 10 then
+  --     gui.alert("Немає підключення")
+  --   end
+  --   modem.broadcast(33, prices[1], prices[2], prices[3], "gas")
+  --   local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
+  --   if name == "modem_message" then
+  --     if sGas922 == gas92.text then
+  --       if sGas982 == gas98.text then
+  --         if sDiesel2 == diesel.text then
+  --           break
+  --         end
+  --       end
+  --     end
+  --   end
+  -- end
 
   if indicator then
     --крутимо індикатор
@@ -296,12 +296,8 @@ for i = 1, 10 do
         for i = 1, 10 do        
           local name1, _, _, _, _, _, _, _, extra = event.pull()
           if name == "modem_message" then
-            if i == 10 then
-              gui.alert("Немає підключення")
-            else
-              if extra == "updated" then
-                break
-              end
+            if extra == "updated" then
+              break
             end
           end
         end

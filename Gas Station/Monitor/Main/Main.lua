@@ -47,7 +47,9 @@ while true do
   local name, _, _, _, _, SignalGas92, SignalGas98, SignalDiesel, extra = event.pull()
   if name == "modem_message" then
       UpdateText(SignalGas92, SignalGas98, SignalDiesel)
-      modem.broadcast(32, SignalGas92, SignalGas98, SignalDiesel)
+      if extra == "gas" then
+        modem.broadcast(32, SignalGas92, SignalGas98, SignalDiesel)
+      end
 
       if extra == "ver" then
         modem.broadcast(32, nil, nil, nil, version)
