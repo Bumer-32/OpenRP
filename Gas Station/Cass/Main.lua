@@ -102,9 +102,6 @@ local function load()
   prices = filesystem.readTable(resouces .. "Config.cfg")
     --перевірка палива
   for i = 1, 10 do
-    if i == 10 then
-      gui.alert("Немає підключення")
-    end
     modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
     local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
     if name == "modem_message" then
@@ -118,22 +115,19 @@ local function load()
     end
   end
 
-  for i = 1, 10 do
-    if i == 10 then
-      gui.alert("Немає підключення")
-    end
-    modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
-    local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
-    if name == "modem_message" then
-      if sGas922 == gas92.text then
-        if sGas982 == gas98.text then
-          if sDiesel2 == diesel.text then
-            break
-          end
-        end
-      end
-    end
-  end
+  -- for i = 1, 10 do
+  --   modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
+  --   local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
+  --   if name == "modem_message" then
+  --     if sGas922 == gas92.text then
+  --       if sGas982 == gas98.text then
+  --         if sDiesel2 == diesel.text then
+  --           break
+  --         end
+  --       end
+  --     end
+  --   end
+  -- end
   
   prices[1] = gas92.text
   prices[2] = gas98.text
@@ -268,7 +262,7 @@ else
   )
   if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(version) then
     gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")  
-    
+
     internet.download(
     "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/updater.lua",
     tempPath .. "/CassUpdater.lua"
@@ -279,21 +273,17 @@ else
   end
 end
 for i = 1, 10 do
-  if i == 10 then
-    gui.alert("Немає підключення")
-  else
-    modem.broadcast(32, nil, nil, nil, "ver")
-    local name, _, _, _, _, _, _, _, extra = event.pull()
-    if name == "modem_message" then
-      if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
-        gui.alert("Программа монітору буде оновлена!")
-        event.sleep(2)
-        modem.broadcast(32, nil, nil, nil, "update")
-        local name1, _, _, _, _, _, _, _, extra = event.pull()
-        if name == "modem_message" then
-          if extra == "updated" then
-            break
-          end
+  modem.broadcast(32, nil, nil, nil, "ver")
+  local name, _, _, _, _, _, _, _, extra = event.pull()
+  if name == "modem_message" then
+    if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
+      gui.alert("Программа монітору буде оновлена!")
+      event.sleep(2)
+      modem.broadcast(32, nil, nil, nil, "update")
+      local name1, _, _, _, _, _, _, _, extra = event.pull()
+      if name == "modem_message" then
+        if extra == "updated" then
+          break
         end
       end
     end
