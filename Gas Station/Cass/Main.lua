@@ -105,11 +105,13 @@ local function load()
       gui.alert("Немає підключення")
     end
     modem.broadcast(32, gas92.text, gas98.text, diesel.text)
-    local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull("modem_message")
-    if sGas92 == gas92.text then
-      if sGas98 == gas98.text then
-        if sDiesel == diesel.text then
-          break
+    local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
+    if name == "modem_message" then
+      if sGas92 == gas92.text then
+        if sGas98 == gas98.text then
+          if sDiesel == diesel.text then
+            break
+          end
         end
       end
     end
@@ -120,11 +122,13 @@ local function load()
       gui.alert("Немає підключення")
     end
     modem.broadcast(32, gas92.text, gas98.text, diesel.text)
-    local _, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull("modem_message")
-    if sGas922 == gas92.text then
-      if sGas982 == gas98.text then
-        if sDiesel2 == diesel.text then
-          break
+    local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
+    if name == "modem_message" then
+      if sGas922 == gas92.text then
+        if sGas982 == gas98.text then
+          if sDiesel2 == diesel.text then
+            break
+          end
         end
       end
     end
@@ -278,14 +282,18 @@ for i = 1, 10 do
     gui.alert("Немає підключення")
   else
     modem.broadcast(32, nil, nil, nil, "ver")
-    local name, _, _, _, _, _, _, _, extra = event.pull("modem_message")
-    if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
-      gui.alert("Программа монітору буде оновлена!")
-      event.sleep(2)
-      modem.broadcast(32, nil, nil, nil, "update")
-      local _, _, _, _, _, _, _, _, extra = event.pull("modem_message")
-      if extra == "updated" then
-        break
+    local name, _, _, _, _, _, _, _, extra = event.pull()
+    if name == "modem_message" then
+      if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
+        gui.alert("Программа монітору буде оновлена!")
+        event.sleep(2)
+        modem.broadcast(32, nil, nil, nil, "update")
+        local name1, _, _, _, _, _, _, _, extra = event.pull()
+        if name == "modem_message" then
+          if extra == "updated" then
+            break
+          end
+        end
       end
     end
   end
