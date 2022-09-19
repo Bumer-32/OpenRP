@@ -93,18 +93,20 @@ local function start()
   end
 end
 
-local function load()
+local function load(extra, indicator)
   --треба вмикнути індикатор і відкрити порт для поточного трафіку перевірки
-  progressIndicator.active = true
+  if indicator then
+    progressIndicator.active = true
+  end
   modem.open(32)
   modem.open(33)
-  
+  prices = filesystem.readTable(resouces .. "Config.cfg")
     --перевірка палива
   for i = 1, 10 do
     if i == 10 then
       gui.alert("Немає підключення")
     end
-    modem.broadcast(32, gas92.text, gas98.text, diesel.text)
+    modem.broadcast(32, prices[1], prices[2], prices[3])
     local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
     if name == "modem_message" then
       if sGas92 == gas92.text then
@@ -121,7 +123,7 @@ local function load()
     if i == 10 then
       gui.alert("Немає підключення")
     end
-    modem.broadcast(32, gas92.text, gas98.text, diesel.text)
+    modem.broadcast(32, prices[1], prices[2], prices[3])
     local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
     if name == "modem_message" then
       if sGas922 == gas92.text then
@@ -133,20 +135,17 @@ local function load()
       end
     end
   end
-  
-  prices[1] = gas92.text
-  prices[2] = gas98.text
-  prices[3] = diesel.text
-  
-  filesystem.writeTable(resouces .. "Config.cfg", prices)
-  --крутимо індикатор
-  for i = 0, 10 do
-    progressIndicator:roll()
-    workspace:draw()
-    event.sleep(0.1)
+
+  if indicator then
+    --крутимо індикатор
+    for i = 0, 10 do
+      progressIndicator:roll()
+      workspace:draw()
+      event.sleep(0.1)
+    end
+    --та вимикай його
+    progressIndicator.active = false
   end
-  --та вимикай його
-  progressIndicator.active = false
   modem.close(32) --і порт закрий
   modem.close(33) --і порт закрий
   
@@ -191,6 +190,12 @@ send.onTouch = function()
     return
   end
   
+  prices[1] = gas92.text
+  prices[2] = gas98.text
+  prices[3] = diesel.text
+  
+  filesystem.writeTable(resouces .. "Config.cfg", prices)
+
   load()
 end
 
@@ -281,17 +286,23 @@ for i = 1, 10 do
   if i == 10 then
     gui.alert("Немає підключення")
   else
-    modem.broadcast(32, nil, nil, nil, "ver")
+    load("ver", false)
     local name, _, _, _, _, _, _, _, extra = event.pull()
     if name == "modem_message" then
       if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
         gui.alert("Программа монітору буде оновлена!")
         event.sleep(2)
-        modem.broadcast(32, nil, nil, nil, "update")
-        local name1, _, _, _, _, _, _, _, extra = event.pull()
-        if name == "modem_message" then
-          if extra == "updated" then
-            break
+        load("update", false)
+        for i = 1, 10 do        
+          local name1, _, _, _, _, _, _, _, extra = event.pull()
+          if name == "modem_message" then
+            if i == 10 then
+              gui.alert("Немає підключення")
+            else
+              if extra == "updated" then
+                break
+              end
+            end
           end
         end
       end

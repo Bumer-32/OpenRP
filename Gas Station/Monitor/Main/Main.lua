@@ -48,11 +48,6 @@ while true do
   if name == "modem_message" then
       UpdateText(SignalGas92, SignalGas98, SignalDiesel)
       modem.broadcast(32, SignalGas92, SignalGas98, SignalDiesel)
-        
-      if extra == "exit" then
-        modem.close(32)
-        break
-      end
 
       if extra == "ver" then
         modem.broadcast(32, nil, nil, nil, version)
