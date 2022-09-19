@@ -61,9 +61,9 @@ while true do
           "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/updater.lua",
           tempPath .. "/updater.lua"
         )
+        system.execute(tempPath .. "/updater.lua")
         workspace:stop()
         workspace:draw()
-        system.execute(tempPath .. "/updater.lua")
       end
   end
   modem.close(32)
