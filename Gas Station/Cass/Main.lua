@@ -101,7 +101,7 @@ local function load()
   
   prices = filesystem.readTable(resouces .. "Config.cfg")
     --перевірка палива
-  for i = 1, 10 do
+  for i = 1, 5 do
     modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
     local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
     if name == "modem_message" then
@@ -115,7 +115,7 @@ local function load()
     end
   end
 
-  -- for i = 1, 10 do
+  -- for i = 1, 5 do
   --   modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
   --   local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
   --   if name == "modem_message" then
@@ -272,9 +272,11 @@ else
     window:remove()
   end
 end
-for i = 1, 10 do
+for i = 1, 5 do
   modem.broadcast(32, nil, nil, nil, "ver")
+  gui.alert()
   local name, _, _, _, _, _, _, _, extra = event.pull()
+  gui.alert()
   if name == "modem_message" then
     if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
       gui.alert("Программа монітору буде оновлена!")
