@@ -62,6 +62,7 @@ while true do
           tempPath .. "/updater.lua"
         )
         workspace:stop()
+        workspace:draw()
         system.execute(tempPath .. "/updater.lua")
       end
   end
