@@ -274,9 +274,8 @@ else
 end
 for i = 1, 5 do
   modem.broadcast(32, nil, nil, nil, "ver")
-  gui.alert()
   local name, _, _, _, _, _, _, _, extra = event.pull()
-  gui.alert()
+  gui.alert(extra)
   if name == "modem_message" then
     if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
       gui.alert("Программа монітору буде оновлена!")
