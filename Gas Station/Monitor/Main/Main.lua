@@ -18,9 +18,9 @@ workspace:addChild(gui.panel(1, 1, workspace.width, workspace.height, 0x262626))
 
 workspace:addChild(gui.image(workspace.width / 2, 1, image.load(filesystem.path(system.getCurrentScript()) .. "/Logo.pic")))
 
-local gas95 = workspace:addChild(gui.object(10, 4, ""))
-local gas98 = workspace:addChild(gui.object(10, 17))
-local diesel = workspace:addChild(gui.object(10, 31))
+local gas95 = workspace:addChild(gui.object(10, 4, " - 95"))
+local gas98 = workspace:addChild(gui.object(10, 17, " - 98"))
+local diesel = workspace:addChild(gui.object(10, 31, " - ДП"))
 workspace:draw()
 ---------------------------------------------------------------------------------------------------
 local function UpdateText(UpdateGas95, UpdateGas98, UpdateDiesel)
@@ -33,15 +33,15 @@ local function UpdateText(UpdateGas95, UpdateGas98, UpdateDiesel)
     local diesel = workspace:addChild(gui.object(10, 31))
 
     gas95.draw = function(object)
-      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateGas95))
+      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateGas95) .. " - 95")
     end
 
     gas98.draw = function(object)
-      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateGas98))
+      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateGas98) .. " - 98")
     end
 
     diesel.draw = function(object)
-      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateDiesel))
+      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateDiesel) .. " - ДП")
     end
     workspace:draw()
 end
