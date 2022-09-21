@@ -4,6 +4,7 @@ local component = require("Component")
 local internet = require("Internet")
 local event = require("Event")
 local screen = require("Screen")
+local image = require("Image")
 local gui = require("GUI")
 local bigLetters = require(filesystem.path(system.getCurrentScript()) .. "/BigLetters.lua")
 
@@ -15,9 +16,12 @@ local tempPath = system.getTemporaryPath()
 local workspace = gui.workspace()
 workspace:addChild(gui.panel(1, 1, workspace.width, workspace.height, 0x262626))
 
+workspace:addChild(gui.image(workspace.width / 2, 1, image.load(filesystem.path(system.getCurrentScript()) .. "/Logo.pic")))
+
 local gas92 = workspace:addChild(gui.object(10, 4))
 local gas98 = workspace:addChild(gui.object(10, 17))
 local diesel = workspace:addChild(gui.object(10, 31))
+workspace:draw()
 ---------------------------------------------------------------------------------------------------
 local function UpdateText(UpdateGas92, UpdateGas98, UpdateDiesel)
     gas92:remove()
