@@ -18,22 +18,22 @@ workspace:addChild(gui.panel(1, 1, workspace.width, workspace.height, 0x262626))
 
 workspace:addChild(gui.image(workspace.width / 2, 1, image.load(filesystem.path(system.getCurrentScript()) .. "/Logo.pic")))
 
-local gas92 = workspace:addChild(gui.object(10, 4))
+local gas95 = workspace:addChild(gui.object(10, 4, ""))
 local gas98 = workspace:addChild(gui.object(10, 17))
 local diesel = workspace:addChild(gui.object(10, 31))
 workspace:draw()
 ---------------------------------------------------------------------------------------------------
-local function UpdateText(UpdateGas92, UpdateGas98, UpdateDiesel)
-    gas92:remove()
+local function UpdateText(UpdateGas95, UpdateGas98, UpdateDiesel)
+    gas95:remove()
     gas98:remove()
     diesel:remove()
 
-    local gas92 = workspace:addChild(gui.object(10, 4))
+    local gas95 = workspace:addChild(gui.object(10, 4))
     local gas98 = workspace:addChild(gui.object(10, 17))
     local diesel = workspace:addChild(gui.object(10, 31))
 
-    gas92.draw = function(object)
-      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateGas92))
+    gas95.draw = function(object)
+      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateGas95))
     end
 
     gas98.draw = function(object)
@@ -48,11 +48,11 @@ end
 
 while true do
   modem.open(32)
-  local name, _, _, _, _, SignalGas92, SignalGas98, SignalDiesel, extra = event.pull()
+  local name, _, _, _, _, SignalGas95, SignalGas98, SignalDiesel, extra = event.pull()
   if name == "modem_message" then
       if extra == "gas" then
-        UpdateText(SignalGas92, SignalGas98, SignalDiesel)
-        modem.broadcast(32, SignalGas92, SignalGas98, SignalDiesel)
+        UpdateText(SignalGas95, SignalGas98, SignalDiesel)
+        modem.broadcast(32, SignalGas95, SignalGas98, SignalDiesel)
       end
 
       if extra == "ver" then

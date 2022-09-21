@@ -21,19 +21,19 @@ window.actionButtons.maximize:remove()
 
 --загрузка, поля для цін і кнопка відпраки туди же
 local progressIndicator = window:addChild(gui.progressIndicator(16, window.height - 36, 0xdbdbdb, 0x00b640, 0x99FF80))
-local gas92 = window:addChild(gui.input(10, window.height - 33, 17, 3, 0xdbdbdb, 0x353535, 0x999999, 0xAAAAAA, 0x2D2D2D, "", "92-гий бензин", true))
+local gas95 = window:addChild(gui.input(10, window.height - 33, 17, 3, 0xdbdbdb, 0x353535, 0x999999, 0xAAAAAA, 0x2D2D2D, "", "95-тий бензин", true))
 local gas98 = window:addChild(gui.input(10, window.height - 29, 17, 3, 0xdbdbdb, 0x353535, 0x999999, 0xAAAAAA, 0x2D2D2D, "", "98-мий бензин", true))
 local diesel = window:addChild(gui.input(10, window.height - 25, 17, 3, 0xdbdbdb, 0x353535, 0x999999, 0xAAAAAA, 0x2D2D2D, "", "Дизельне пальне", true))
 local send = window:addChild(gui.button(10, window.height - 21, 17, 3, 0xdbdbdb, 0x000000, 0xAAAAAA, 0x0, "Відобразити"))
 
-text92 = window:addChild(gui.text(10, window.height - 17, 0x000000, "92-гий = "))
+text95 = window:addChild(gui.text(10, window.height - 17, 0x000000, "95-тий = "))
 text98 = window:addChild(gui.text(10, window.height - 16, 0x000000, "98-мий = "))
 textDiesel = window:addChild(gui.text(10, window.height - 15, 0x000000, "Дизельне пальне = "))
 
 local logo = window:addChild(gui.image(0, 0, logoImage))
   
 local comboBox = window:addChild(gui.comboBox(window.width - 32, window.height - 33, 22, 3, 0xdbdbdb, 0x000000, 0xAAAAAA, 0xdbdbdb))
-comboBox:addItem("92-гий бензин")
+comboBox:addItem("95-тий бензин")
 comboBox:addItem("98-мий бензин")
 comboBox:addItem("Дизельне пальне")
 local litres = window:addChild(gui.input(window.width - 30, window.height - 29, 18, 3, 0xdbdbdb, 0x353535, 0x999999, 0xAAAAAA, 0x2D2D2D, "", "Введіть літраж", true))
@@ -52,12 +52,12 @@ window.onResize = function(newWidth, newHeight)
   window.titleLabel.width = newWidth
 
   progressIndicator.localX, progressIndicator.localY = 16, newHeight - 36
-  gas92.localX, gas92.localY = 10, newHeight - 33
+  gas95.localX, gas95.localY = 10, newHeight - 33
   gas98.localX, gas98.localY = 10, newHeight - 29
   diesel.localX, diesel.localY = 10, newHeight - 25
   send.localX, send.localY = 10, newHeight - 21
 
-  text92.localX, text92.localY = 10, newHeight - 17
+  text95.localX, text95.localY = 10, newHeight - 17
   text98.localX, text98.localY = 10, newHeight - 16
   textDiesel.localX, textDiesel.localY = 10, newHeight - 15
 
@@ -77,11 +77,11 @@ local function start()
   prices = filesystem.readTable(resouces .. "Config.cfg")
 
   if prices == nil then
-    text92.text = "92-гий = 0" .. " " .. "грн"
+    text95.text = "95-тий = 0" .. " " .. "грн"
     text98.text = "98-мий = 0" .. " " .. "грн"
     textDiesel.text = "Дизельне пальне = 0" .. " " .. "грн"
   else
-    text92.text = "92-гий = " .. prices[1] .. " " .. "грн"
+    text95.text = "95-тий = " .. prices[1] .. " " .. "грн"
   end
 
   if prices[2] ~= nil then
@@ -103,9 +103,9 @@ local function load()
     --перевірка палива
   for i = 1, 5 do
     modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
-    local name, _, _, _, _, sGas92, sGas98, sDiesel = event.pull()
+    local name, _, _, _, _, sGas95, sGas98, sDiesel = event.pull()
     if name == "modem_message" then
-      if sGas92 == gas92.text then
+      if sGas95 == gas95.text then
         if sGas98 == gas98.text then
           if sDiesel == diesel.text then
             break
@@ -114,22 +114,8 @@ local function load()
       end
     end
   end
-
-  -- for i = 1, 5 do
-  --   modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
-  --   local name, _, _, _, _, sGas922, sGas982, sDiesel2 = event.pull()
-  --   if name == "modem_message" then
-  --     if sGas922 == gas92.text then
-  --       if sGas982 == gas98.text then
-  --         if sDiesel2 == diesel.text then
-  --           break
-  --         end
-  --       end
-  --     end
-  --   end
-  -- end
   
-  prices[1] = gas92.text
+  prices[1] = gas95.text
   prices[2] = gas98.text
   prices[3] = diesel.text
   
@@ -148,7 +134,7 @@ local function load()
   start()
 end
 
-gas92.validator = function(text)
+gas95.validator = function(text)
   return text:match("%d+")
 end
 
@@ -171,8 +157,8 @@ end
 
 send.onTouch = function()
     --перевірка на текст
-  if gas92.text == "" then
-    gui.alert("Ви не ввели сумму за 92-гий бензин!")
+  if gas95.text == "" then
+    gui.alert("Ви не ввели сумму за 95-тий бензин!")
     return
   end
   
