@@ -46,36 +46,37 @@ local function UpdateText(UpdateGas95, UpdateGas98, UpdateDiesel)
     workspace:draw()
 end
 
+UpdateText(102, 102, 102)
+
 while true do
   modem.open(32)
   local name, _, _, _, _, SignalGas95, SignalGas98, SignalDiesel, extra = event.pull()
   if name == "modem_message" then
-      if extra == "gas" then
-        UpdateText(SignalGas95, SignalGas98, SignalDiesel)
-        modem.broadcast(32, SignalGas95, SignalGas98, SignalDiesel)
-      end
+    if extra == "gas" then
+      UpdateText(SignalGas95, SignalGas98, SignalDiesel)
+      modem.broadcast(32, SignalGas95, SignalGas98, SignalDiesel)
+    end
 
-      if extra == "ver" then
-        for i = 1, 5 do
-          modem.broadcast(32, nil, nil, nil, version)
-        end
+    if extra == "ver" then
+      for i = 1, 5 do
+        modem.broadcast(32, nil, nil, nil, version)
       end
+    end
 
-      if extra == "update" then--sleep
-        for i = 1, 5 do
-          modem.broadcast(32, nil, nil, nil, "updated")
-        end
-        internet.download(
-          "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/updater.lua",
-          tempPath .. "/updater.lua"
-        )
-        system.execute(tempPath .. "/updater.lua")
-        workspace:stop()
-        workspace:draw()
+    if extra == "update" then--sleep
+      for i = 1, 5 do
+        modem.broadcast(32, nil, nil, nil, "updated")
       end
+      internet.download(
+        "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/updater.lua",
+        tempPath .. "/updater.lua"
+      )
+      break
+    end
   end
   modem.close(32)
 end
----------------------------------------------------------------------------------------------------
+
+system.execute(tempPath .. "/updater.lua")
 workspace:draw()
-workspace:start()
+
