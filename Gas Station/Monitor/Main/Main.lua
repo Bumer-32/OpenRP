@@ -16,7 +16,7 @@ local tempPath = system.getTemporaryPath()
 local workspace = gui.workspace()
 workspace:addChild(gui.panel(1, 1, workspace.width, workspace.height, 0x262626))
 
-workspace:addChild(gui.image(workspace.width / 2, 1, image.load(filesystem.path(system.getCurrentScript()) .. "/Logo.pic")))
+workspace:addChild(gui.image(workspace.width / 2, 1, image.load(filesystem.path(system.getCurrentScript()) .. "/BigLogo.pic")))
 
 local gas95 = workspace:addChild(gui.object(10, 4, " - 95"))
 local gas98 = workspace:addChild(gui.object(10, 17, " - 98"))

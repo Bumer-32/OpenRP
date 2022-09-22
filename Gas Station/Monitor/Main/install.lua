@@ -12,8 +12,8 @@ internet.download("https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20
 print("Succes!")
 print("")
 
-print("Downloading Logo.pic")
-internet.download("https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/Logo.pic", "/Applications/Table.app/Logo.pic")
+print("Downloading BigLogo.pic")
+internet.download("https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/BigLogo.pic", "/Applications/Table.app/BigLogo.pic")
 print("Succes!")
 print("")
 
