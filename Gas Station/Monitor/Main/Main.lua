@@ -20,7 +20,7 @@ workspace:addChild(gui.image(workspace.width / 2, 1, image.load(filesystem.path(
 
 local gas95 = workspace:addChild(gui.object(10, 4, " - 95"))
 local gas98 = workspace:addChild(gui.object(10, 17, " - 98"))
-local diesel = workspace:addChild(gui.object(10, 31, " - ДП"))
+local diesel = workspace:addChild(gui.object(10, 31, " - дп"))
 workspace:draw()
 ---------------------------------------------------------------------------------------------------
 local function UpdateText(UpdateGas95, UpdateGas98, UpdateDiesel)
@@ -41,7 +41,7 @@ local function UpdateText(UpdateGas95, UpdateGas98, UpdateDiesel)
     end
 
     diesel.draw = function(object)
-      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateDiesel) .. " - ДП")
+      bigLetters.drawText(object.x, object.y, 0xFFFFFF, tostring(UpdateDiesel) .. " - дп")
     end
     workspace:draw()
 end
@@ -61,7 +61,7 @@ while true do
         end
       end
 
-      if extra == "update" then
+      if extra == "update" then--sleep
         for i = 1, 5 do
           modem.broadcast(32, nil, nil, nil, "updated")
         end
