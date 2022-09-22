@@ -270,9 +270,9 @@ for i = 1, 5 do
       modem.broadcast(32, nil, nil, nil, "update")
       modem.open(32)
       local name, _, _, _, _, _, _, _, extra = event.pull()
-      modem.close(32)
       if name == "modem_message" then
         if extra == "updated" then
+          modem.close(32)
           break
         end
       end
