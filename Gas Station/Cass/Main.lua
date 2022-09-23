@@ -255,6 +255,7 @@ for i = 1, 5 do
           modem.close(32)
           break
         end
+      end
     end
   end
 end
