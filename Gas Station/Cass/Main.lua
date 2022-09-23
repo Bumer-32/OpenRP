@@ -251,7 +251,7 @@ for i = 1, 5 do
       local name, _, _, _, _, _, _, _, extra = event.pull()
       if name == "modem_message" then
         if extra == "updated" then
-          gui.alert
+          gui.alert()
           modem.close(32)
           break
         end
