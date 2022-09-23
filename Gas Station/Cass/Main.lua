@@ -190,15 +190,15 @@ pay.onTouch = function()
     workspace:draw()
     event.sleep(0.1)
     
-    rest.text = "Рахую ┃"
+    rest.text = "Рахую Ooo"
     workspace:draw()
     event.sleep(0.1)
     
-    rest.text = "Рахую ┃┃"
+    rest.text = "Рахую oOo"
     workspace:draw()
     event.sleep(0.1)
     
-    rest.text = "Рахую ┃┃┃"
+    rest.text = "Рахую ooO"
     workspace:draw()
     event.sleep(0.1)
   end
@@ -222,44 +222,23 @@ pay.onTouch = function()
   end
 end
 
-if filesystem.exists(tempPath .. "/Version.cfg") then
-  filesystem.remove(tempPath .. "/Version.cfg")
+internet.download(
+  "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/Version.cfg",
+  tempPath .. "/Version.cfg"
+)
+if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(version) then
+  gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")  
+
   internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/Version.cfg",
-    tempPath .. "/Version.cfg"
+  "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/updater.lua",
+  tempPath .. "/CassUpdater.lua"
   )
-  if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(version) then
-    gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")
-    event.sleep(2)
-  
-
-    internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/updater.lua",
-    tempPath .. "/CassUpdater.lua"
-    )
-    system.execute(tempPath .. "/CassUpdater.lua")
-    
-    window:remove() 
-  end
-else
-  internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/Version.cfg",
-    tempPath .. "/Version.cfg"
-  )
-  if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(version) then
-    gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення")  
-
-    internet.download(
-    "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/updater.lua",
-    tempPath .. "/CassUpdater.lua"
-    )
-    system.execute(tempPath .. "/CassUpdater.lua")
-
-    window:remove()
-  end
+  system.execute(tempPath .. "/CassUpdater.lua")
+  window:remove()
 end
+
 for i = 1, 5 do
-  modem.broadcast(32, nil, nil, nil, "ver")
+  modem.broadcast(32, nil, nil, nil, "ver")  
   modem.open(32)
   local name, _, _, _, _, _, _, _, extra = event.pull()
   modem.close(32)
@@ -272,10 +251,10 @@ for i = 1, 5 do
       local name, _, _, _, _, _, _, _, extra = event.pull()
       if name == "modem_message" then
         if extra == "updated" then
+          gui.alert
           modem.close(32)
           break
         end
-      end
     end
   end
 end
