@@ -6,11 +6,10 @@ local event = require("Event")
 local screen = require("Screen")
 local image = require("Image")
 local gui = require("GUI")
-local bigLetters = require(filesystem.path(system.getCurrentScript()) .. "/BigLetters.lua")
+local bigLetters = require("BigLetters")
 
 local modem = component.modem
 ---------------------------------------------------------------------------------------------------
-local version = "1.0"
 local tempPath = system.getTemporaryPath()
 ---------------------------------------------------------------------------------------------------
 local workspace = gui.workspace()
@@ -46,7 +45,7 @@ local function UpdateText(UpdateGas95, UpdateGas98, UpdateDiesel)
     workspace:draw()
 end
 
-UpdateText(102, 102, 102)
+UpdateText(1, 1, 1)
 
 while true do
   modem.open(32)
@@ -57,16 +56,8 @@ while true do
       modem.broadcast(32, SignalGas95, SignalGas98, SignalDiesel)
     end
 
-    if extra == "ver" then
-      for i = 1, 5 do
-        modem.broadcast(32, nil, nil, nil, version)
-      end
-    end
-
     if extra == "update" then--sleep
-      for i = 1, 5 do
-        modem.broadcast(32, nil, nil, nil, "updated")
-      end
+      gui.alert()
       internet.download(
         "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/updater.lua",
         tempPath .. "/updater.lua"
@@ -79,4 +70,3 @@ end
 
 system.execute(tempPath .. "/updater.lua")
 workspace:draw()
-
