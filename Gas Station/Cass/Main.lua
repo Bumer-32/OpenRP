@@ -11,7 +11,7 @@ local modem = component.modem
 local resouces = filesystem.path(system.getCurrentScript())
 local tempPath = system.getTemporaryPath()
 local version = "1.3.9"
-MonitorVersion = "1.1"
+MonitorVersion = "1.1.1"
 local prices = {}
 
 local logoImage = image.load(resouces .. "Logo.pic")
