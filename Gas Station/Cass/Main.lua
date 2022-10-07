@@ -11,6 +11,7 @@ local modem = component.modem
 local resouces = filesystem.path(system.getCurrentScript())
 local tempPath = system.getTemporaryPath()
 local version = "1.3.4"
+MonitorVersion = "1.0"
 local prices = {}
 
 local logoImage = image.load(resouces .. "Logo.pic")
@@ -103,6 +104,20 @@ local function load()
     --перевірка палива
   for i = 1, 5 do
     modem.broadcast(32, prices[1], prices[2], prices[3], "gas")
+    local name, _, _, _, _, sGas95, sGas98, sDiesel = event.pull()
+    if name == "modem_message" then
+      if sGas95 == gas95.text then
+        if sGas98 == gas98.text then
+          if sDiesel == diesel.text then
+            break
+          end
+        end
+      end
+    end
+  end
+
+  for i = 1, 5 do
+    modem.broadcast(33, prices[1], prices[2], prices[3], "gas")
     local name, _, _, _, _, sGas95, sGas98, sDiesel = event.pull()
     if name == "modem_message" then
       if sGas95 == gas95.text then
@@ -236,29 +251,14 @@ if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(ver
   system.execute(tempPath .. "/CassUpdater.lua")
   window:remove()
 end
-
-for i = 1, 5 do
-  modem.broadcast(32, nil, nil, nil, "ver")  
-  modem.open(32)
-  local name, _, _, _, _, _, _, _, extra = event.pull()
-  modem.close(32)
-  if name == "modem_message" then
-    if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(extra) then
-      gui.alert("Программа монітору буде оновлена!")
-      event.sleep(2)
-      modem.broadcast(32, nil, nil, nil, "update")
-      modem.open(32)
-      local name, _, _, _, _, _, _, _, extra = event.pull()
-      if name == "modem_message" then
-        if extra == "updated" then
-          gui.alert()
-          modem.close(32)
-          break
-        end
-      end
-    end
-  end
+if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(MonitorVersion) then
+  gui.alert("Программа Монітору буде оновлена")
+  modem.broadcast(32, nil, nil, nil, "update")
+  modem.broadcast(33, nil, nil, nil, "update")
 end
 ---------------------------------------------------------------------------------------------------
 --старт
 start()
+
+-- зробити вкладку "що нового"
+-- піддтримка карток
