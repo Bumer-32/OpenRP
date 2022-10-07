@@ -53,7 +53,9 @@ while true do
   if name == "modem_message" then
     if extra == "gas" then
       UpdateText(SignalGas95, SignalGas98, SignalDiesel)
-      modem.broadcast(32, SignalGas95, SignalGas98, SignalDiesel)
+      for i = 1, 5 do
+        modem.broadcast(33, SignalGas95, SignalGas98, SignalDiesel)
+      end
     end
 
     if extra == "update" then--sleep
