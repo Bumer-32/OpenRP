@@ -48,7 +48,7 @@ end
 UpdateText(1, 1, 1)
 
 while true do
-  modem.open(3)
+  modem.open(33)
   local name, _, _, _, _, SignalGas95, SignalGas98, SignalDiesel, extra = event.pull()
   if name == "modem_message" then
     if extra == "gas" then
