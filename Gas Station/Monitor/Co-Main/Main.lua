@@ -57,7 +57,6 @@ while true do
     end
 
     if extra == "update" then--sleep
-      gui.alert()
       internet.download(
         "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Monitor/Main/updater.lua",
         tempPath .. "/updater.lua"
