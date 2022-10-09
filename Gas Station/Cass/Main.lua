@@ -10,8 +10,8 @@ local modem = component.modem
 ---------------------------------------------------------------------------------------------------
 local resouces = filesystem.path(system.getCurrentScript())
 local tempPath = system.getTemporaryPath()
-local version = "1.3.9"
-MonitorVersion = "1.1.1"
+local version = "1.4"
+MonitorVersion = "1.1.5"
 local prices = {}
 
 local logoImage = image.load(resouces .. "Logo.pic")
@@ -252,9 +252,16 @@ if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[1]) ~= tostring(ver
   window:remove()
 end
 if tostring(filesystem.readLines(tempPath .. "/Version.cfg")[2]) ~= tostring(MonitorVersion) then
-  gui.alert("Программа Монітору буде оновлена")
+  gui.alert("Программа була оновлена і вона буде закрита в цілях оновлення") 
   modem.broadcast(32, nil, nil, nil, "update")
   modem.broadcast(33, nil, nil, nil, "update")
+
+  internet.download(
+  "https://raw.githubusercontent.com/Bumer-32/OpenRP/main/Gas%20Station/Cass/updater.lua",
+  tempPath .. "/CassUpdater.lua"
+  )
+  system.execute(tempPath .. "/CassUpdater.lua")
+  window:remove()
 end
 ---------------------------------------------------------------------------------------------------
 --старт
